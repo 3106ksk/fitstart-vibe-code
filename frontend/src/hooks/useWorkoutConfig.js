@@ -134,59 +134,16 @@ const useWorkoutConfig = () => {
     }
   };
 
-  // 種目を追加 - useCallbackで最適化
-  const addExercise = useCallback((exercise) => {
-    console.log('➕ 追加機能実行:', exercise);
-    console.log('📝 追加前の種目リスト:', workoutConfig.exercises);
-    console.log('📊 現在の種目数:', workoutConfig.exercises.length);
-    
-    if (workoutConfig.exercises.length >= 3) {
-      console.log('⚠️ 最大種目数に達しています (3/3)');
-      return;
-    }
-    
-    if (workoutConfig.exercises.includes(exercise)) {
-      console.log('⚠️ 既に選択済みの種目です:', exercise);
-      return;
-    }
-    
-    setWorkoutConfig(prevConfig => {
-      const newExercises = [...prevConfig.exercises, exercise];
-      console.log('✅ 追加後の種目リスト:', newExercises);
-      
+  // 種目を追加
+  const addExercise = (exercise) => {
+    if (workoutConfig.exercises.length < 3 && !workoutConfig.exercises.includes(exercise)) {
       const newConfig = {
-        ...prevConfig,
-        exercises: newExercises
+        ...workoutConfig,
+        exercises: [...workoutConfig.exercises, exercise]
       };
-      
-      // ローカルストレージに即座保存
-      localStorage.setItem('workoutConfig', JSON.stringify(newConfig));
-      console.log('💾 ローカルストレージ保存完了:', newConfig);
-      
-      // フォーム設定も同期保存
-      const formConfig = {
-        exercises: newExercises,
-        maxSets: newConfig.maxSets,
-        formFields: newExercises.map(ex => ({
-          name: ex,
-          type: isCardioExercise(ex) ? 'cardio' : 'strength',
-          isCardio: isCardioExercise(ex),
-          maxSets: newConfig.maxSets,
-          fields: isCardioExercise(ex) 
-            ? ['distance', 'duration'] 
-            : Array.from({ length: newConfig.maxSets }, (_, i) => `set${i + 1}`)
-        }))
-      };
-      localStorage.setItem('workoutFormConfig', JSON.stringify(formConfig));
-      
-      return newConfig;
-    });
-    
-    // 強制再レンダリング
-    setForceUpdate(prev => prev + 1);
-    console.log('🔄 強制再レンダリング実行');
-    
-  }, [workoutConfig.exercises]);
+      saveConfig(newConfig);
+    }
+  };
 
   // 種目を削除 - useCallbackで最適化
   const removeExercise = useCallback((exercise) => {
