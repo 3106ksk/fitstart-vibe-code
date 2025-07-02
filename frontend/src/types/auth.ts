@@ -1,8 +1,8 @@
-
 export interface User {
   id: string | number;
   email: string;
   name?: string;
+  username?: string;
 }
 
 // ログイン認証情報
@@ -37,6 +37,8 @@ export interface AuthContextValue {
   login: (credentials: LoginCredentials) => Promise<User>;
   logout: () => void;
   refreshToken: () => Promise<boolean>;
+  testLogin?: () => void;
+  testLogout?: () => void;
 }
 
 // AuthContextProvider の Props

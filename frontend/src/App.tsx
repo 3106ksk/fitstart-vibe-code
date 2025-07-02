@@ -7,11 +7,11 @@ import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import DashboadPage from './pages/Dashboad';
-import GoalprogressPage from './components/Goalprogress';
-import GoalsettingPage from './pages/GoalsettingPage';
 import Register from './pages/Register';
 import WorkoutFormPage from './pages/WorkoutForm';
 import WorkoutHistory from './pages/WorkoutHistory';
+import WorkoutHistoryCustomization from './pages/WorkoutHistoryCustomization';
+
 function App() {
   return (
     <Router>
@@ -21,9 +21,7 @@ function App() {
           <Route path='/dashboard' element={<PrivateRoute element={<DashboadPage />} />} />
           <Route path='/' element={<PrivateRoute element={<WorkoutFormPage />} />} />
           <Route path='/workout-history' element={<PrivateRoute element={<WorkoutHistory />} />} />
-          <Route path='/goalsetting' element={<PrivateRoute element={<GoalsettingPage />} />} />
-          <Route path='/workout-history' element={<PrivateRoute element={<WorkoutHistory />} />} />
-          <Route path='/goalprogress' element={<PrivateRoute element={<GoalprogressPage />} />} />
+          <Route path='/workout-history/customize' element={<PrivateRoute element={<WorkoutHistoryCustomization />} />} />
           <Route path='/signup' element={<PublicRoute element={<Register />} restricted={true} />} />
           <Route path='/login' element={<PublicRoute element={<Login />} restricted={true} />} />
 

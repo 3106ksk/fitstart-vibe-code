@@ -5,13 +5,13 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 
 import { AxiosError, AxiosResponse } from 'axios';
 import {
-  AuthContextProviderProps,
-  AuthContextValue,
-  JwtPayload,
-  LoginCredentials,
-  LoginResponse,
-  RefreshTokenResponse,
-  User
+    AuthContextProviderProps,
+    AuthContextValue,
+    JwtPayload,
+    LoginCredentials,
+    LoginResponse,
+    RefreshTokenResponse,
+    User
 } from '../types/auth';
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
@@ -181,6 +181,25 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps): JSX
     }
   };
 
+  // テスト用ログイン機能を追加
+  const testLogin = useCallback((): void => {
+    const testUser: User = {
+      id: 'test-user-id',
+      username: 'テストユーザー',
+      email: 'test@example.com'
+    };
+    setUser(testUser);
+    localStorage.setItem('token', 'test-token');
+    setAuthToken('test-token');
+    console.log('テスト用ログインを実行しました:', testUser);
+  }, []);
+
+  // テスト用ログアウト機能
+  const testLogout = useCallback((): void => {
+    logout();
+    console.log('テスト用ログアウトを実行しました');
+  }, [logout]);
+
   // トークン有効期限チェックの定期実行
   useEffect((): (() => void) | undefined => {
     if (user) {
@@ -191,7 +210,15 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps): JSX
   }, [user, checkTokenExpiration]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, refreshToken }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      login, 
+      logout, 
+      loading, 
+      refreshToken,
+      testLogin,
+      testLogout
+    }}>
       {children}
     </AuthContext.Provider>
   )

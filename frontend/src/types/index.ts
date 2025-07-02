@@ -7,56 +7,45 @@
  * インポート文の簡素化とバンドル最適化
  */
 
-// Goal 関連型定義
-export type {
-
-  // API レスポンス型
-  ApiResponse,
-  // リクエスト型
-  // 目標作成リクエスト型
-  // 基本型
-  Goal, GoalApiError, GoalCardProps,
-  // UI 状態型
-  GoalListResponse, GoalPermission, GoalProgress,
-  // ユーティリティ型
-  GoalQueryKey, GoalStatistics
-} from './goal';
-
 // Feedback 関連型定義
 export type { FeedbackState, FeedbackType } from './feedback';
 
-// Goal 関連関数のエクスポート
-export { isGoal, isValidProgressAmount } from './goal';
-
 // API 通信型定義
 export type {
-  ApiClient,
-  // API クライアント型
-  ApiClientConfig,
-  ApiClientResponse,
-  // エラー型
-  ApiError,
-  ApiErrorDetail,
-  // リクエスト型
-  ApiRequestConfig, AppError, AuthenticationError, AuthTokens,
-  // レスポンス型
-  BaseApiResponse,
-  // ユーティリティ型
-  ExtractApiData,
-  // Goal API 専用型
-  GoalApiEndpoint, GoalListApiResponse, GoalListParams,
-  // HTTP 基本型
-  HttpMethod,
-  HttpStatusCode,
-  // 認証型
-  JwtPayload, ListRequestParams, LoginRequest,
-  LoginResponse, NetworkError, OptionalOnly, PaginatedApiResponse, PaginationInfo, PaginationParams,
-  // React Query 型
-  QueryKey, RequiredOnly, SearchParams, SortParams, UnwrapPromise
+    ApiClient,
+    // API クライアント型
+    ApiClientConfig,
+    ApiClientResponse,
+    // エラー型
+    ApiError,
+    ApiErrorDetail,
+    // リクエスト型
+    ApiRequestConfig,
+    AppError, AuthTokens, AuthenticationError,
+    // レスポンス型
+    BaseApiResponse,
+    // ユーティリティ型
+    ExtractApiData,
+    // HTTP 基本型
+    HttpMethod,
+    HttpStatusCode,
+    // 認証型
+    JwtPayload,
+    ListRequestParams,
+    LoginRequest,
+    LoginResponse,
+    NetworkError,
+    OptionalOnly,
+    PaginatedApiResponse,
+    PaginationInfo,
+    PaginationParams,
+    // React Query 型
+    QueryKey,
+    RequiredOnly,
+    SearchParams,
+    SortParams,
+    UnwrapPromise
 } from './api';
-
-// クエリキー定数
-export { goalQueryKeys } from './api';
 
 // ============================================================================
 // 開発者向けユーティリティ型
@@ -105,14 +94,14 @@ export interface FormComponentProps extends BaseComponentProps {
 }
 
 // ============================================================================
-// MVP 開発特有の型定義
+// ワークアウト機能特有の型定義
 // ============================================================================
 
 /**
- * MVP開発段階の識別型
+ * ワークアウト機能の開発段階識別型
  * 機能の開発段階を管理
  */
-export type MvpFeatureStatus = 
+export type WorkoutFeatureStatus = 
   | 'planned'                             // 計画段階
   | 'in_development'                      // 開発中
   | 'testing'                             // テスト中
@@ -120,15 +109,16 @@ export type MvpFeatureStatus =
   | 'deferred';                           // 延期
 
 /**
- * MVP機能フラグ型
+ * ワークアウト機能フラグ型
  * 機能の有効/無効を制御
  */
-export interface MvpFeatureFlags {
-  goalProgressDisplay: boolean;           // 目標進捗表示機能
+export interface WorkoutFeatureFlags {
+  customWorkouts: boolean;                // カスタムワークアウト機能
+  historyAnalytics: boolean;              // 履歴分析機能
+  quickRepeat: boolean;                   // クイックリピート機能
   realTimeUpdates: boolean;               // リアルタイム更新
-  advancedFiltering: boolean;             // 高度なフィルタリング
   dataExport: boolean;                    // データエクスポート
-  pushNotifications: boolean;             // プッシュ通知
+  workoutReminders: boolean;              // ワークアウトリマインダー
 }
 
 /**
@@ -190,5 +180,4 @@ export interface TypeCompatibility {
 
 // TypeScript設定による型チェック強化
 export type { } from './api';
-export type { } from './goal';
 
